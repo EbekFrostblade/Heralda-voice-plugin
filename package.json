@@ -21,6 +21,7 @@
   "author": "Brad \"breadjones\" Jones",
   "license": "MIT",
   "dependencies": {
-    "heralda-plugin-base": "EbekFrostblade/Heralda-plugin-base"
+    "heralda-plugin-base": "EbekFrostblade/Heralda-plugin-base",
+    "discord.js": "^11.4.2"
   }
 }
