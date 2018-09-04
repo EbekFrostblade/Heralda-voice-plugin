@@ -1,0 +1,26 @@
+{
+  "name": "heralda-voice-plugin",
+  "version": "0.0.1",
+  "description": "Heralda's voice, which she uses to announce users as they enter or leave a voice channel.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "add later"
+  },
+  "keywords": [
+    "heralda-plugin",
+    "heralda",
+    "tts",
+    "voice",
+    "discord",
+    "bot"
+  ],
+  "author": "Brad \"breadjones\" Jones",
+  "license": "MIT",
+  "dependencies": {
+    "heralda-plugin-base": "EbekFrostblade/Heralda-plugin-base"
+  }
+}
