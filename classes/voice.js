@@ -14,6 +14,11 @@ class Voice {
         const fileName = message.replace(/[.,\\\/#!$%\^&\*;:{}=\-_`~()?]/g,"").split(" ").join("_").toLowerCase() + ".mp3";
 
         readyAnnouncementFile(message, fileName, (err, filePath) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+
             console.log('queueing message: ' + message);
             this.voiceQueue.queueAudioForChannel(filePath, voiceChannel);
         });
