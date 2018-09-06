@@ -1,6 +1,6 @@
 # Heralda, the helpful Discord Herald Bot
 
-Heralda is a chat bot that announces the arrival of new users to voice channels in Discord. She uses voicerss.org to retrieve text-to-speech voice clips, which she then plays in the voice channel.
+[Heralda](https://github.com/EbekFrostblade/Heralda-chat-bot) is a chat bot that announces the arrival of new users to voice channels in Discord. She uses voicerss.org to retrieve text-to-speech voice clips, which she then plays in the voice channel.
 
 ## This Component
 
