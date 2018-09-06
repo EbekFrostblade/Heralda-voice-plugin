@@ -13,7 +13,7 @@ class Voice {
     announce(voiceChannel, message) {
         const fileName = message.replace(/[.,\\\/#!$%\^&\*;:{}=\-_`~()?]/g,"").split(" ").join("_").toLowerCase() + ".mp3";
 
-        readyAnnouncementFile(message, fileName, (err, filePath) => {
+        readyAnnouncementFile(message, fileName, this.apiKey, (err, filePath) => {
             if (err) {
                 console.error(err);
                 return;
@@ -31,10 +31,10 @@ function writeNewSoundFile(filePath, content, callback) {
     fs.mkdir(ttsDirectory, (err) => fs.writeFile(filePath, content, (err) => callback(err)));
 }
 
-function callVoiceRssApi(message, filePath, callback) {
+function callVoiceRssApi(message, filePath, apiKey, callback) {
     console.log("Making API call");
     tts.speech({
-        key: this.apiKey,
+        key: apiKey,
         hl: 'en-gb',
         src: message,
         r: 0,
@@ -53,12 +53,12 @@ function callVoiceRssApi(message, filePath, callback) {
     });
 };
 
-function readyAnnouncementFile(message, fileName, callback) {
+function readyAnnouncementFile(message, fileName, apiKey, callback) {
     const filePath = ttsDirectory + "/" + fileName;
 
     fs.stat(filePath, (err) => {
         if (err && err.code == 'ENOENT') {
-            callVoiceRssApi(message, filePath, (err) => callback(err, filePath));
+            callVoiceRssApi(message, filePath, apiKey, (err) => callback(err, filePath));
             return;
         }
 
