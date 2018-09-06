@@ -43,11 +43,15 @@ class VoicePlugin extends HeraldaPlugin {
   }
 
   _summonedToChat(message) {
-    if (!message.guild || message.author.id === this.client.user.id) {
+    if (!message.guild || !message.member || message.author.id === this.client.user.id) {
       return;
     }
 
     const voiceChannel = message.member.voiceChannel;
+
+    if (!voiceChannel) {
+      message.reply("you aren't in a voice channel.");
+    }
 
     if (voiceChannel.connection && voiceChannel.connection.status === Discord.Constants.VoiceStatus.CONNECTED) {
       message.reply("I'm already in your voice channel.");
