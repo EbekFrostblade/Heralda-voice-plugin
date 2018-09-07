@@ -1,0 +1,15 @@
+{
+  "commands": {
+    "summon": [ "get in here", "you've been summoned" ],
+    "dismiss": [ "get out of here", "dismissed" ]
+  },
+  "messages": {
+    "summoned": "Heralda, as summoned.",
+    "memberConnected": "{$name} has connected.",
+    "memberDisconnected": "{$name} has left the channel.",
+    "errors": {
+      "memberNotInAVoiceChannel": "you aren't in a voice channel.",
+      "alreadyInMembersChannel": "I'm already in your channel."
+    }
+  }
+}

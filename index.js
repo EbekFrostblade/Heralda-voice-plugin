@@ -2,10 +2,12 @@ const Discord = require('discord.js');
 const HeraldaPlugin = require('heralda-plugin-base');
 
 const Voice = require("./classes/voice.js");
+const defaultConfig = require('./config.json');
 
 class VoicePlugin extends HeraldaPlugin {
   init(client, config) {
     this.voice = new Voice(config.voiceApiKey);
+    this.config = HeraldaPlugin.mergeConfigs(config, defaultConfig);
 
     this._listenForSummons();
     this._listenForVoiceStatusChanges();
@@ -13,13 +15,13 @@ class VoicePlugin extends HeraldaPlugin {
 
   _listenForSummons() {
     this.responder.addListener({
-      messages: ['get in here', 'you\'ve been summoned'],
+      messages: this.config.commands.summon,
       privateAllowed: true,
       callback: this._summonedToChat.bind(this)
     });
 
     this.responder.addListener({
-      messages: ['dismissed', 'get out of here'],
+      messages: this.config.commands.dismiss,
       privateAllowed: false,
       callback: this._leaveChat.bind(this)
     });
@@ -50,16 +52,16 @@ class VoicePlugin extends HeraldaPlugin {
     const voiceChannel = message.member.voiceChannel;
 
     if (!voiceChannel) {
-      message.reply("you aren't in a voice channel.");
+      message.reply(this.config.messages.errors.memberNotInAVoiceChannel);
     }
 
     if (voiceChannel.connection && voiceChannel.connection.status === Discord.Constants.VoiceStatus.CONNECTED) {
-      message.reply("I'm already in your voice channel.");
+      message.reply(this.config.messages.errors.alreadyInMembersChannel);
       return;
     }
 
     voiceChannel.join().then((voiceInfo, err) => {
-      const message = "Heralda, as summoned.";
+      const message = this.config.messages.summoned;
 
       if (err) {
         console.log(err);
@@ -79,12 +81,14 @@ class VoicePlugin extends HeraldaPlugin {
   }
 
   _announceUserArrival(guildMember, voiceChannel) {
-    const message = (guildMember.nickname || guildMember.user.username) + " has connected.";
+    let name = (guildMember.nickname || guildMember.user.username);
+    const message = this.config.messages.memberConnected;
     this.voice.announce(voiceChannel, message);
   }
 
   _announceUserExit(guildMember, voiceChannel) {
-    const message = (guildMember.nickname || guildMember.user.username) + " has left the channel.";
+    let name = (guildMember.nickname || guildMember.user.username);
+    const message = this.config.messages.memberDisconnected;
     this.voice.announce(voiceChannel, message);
   }
 }
