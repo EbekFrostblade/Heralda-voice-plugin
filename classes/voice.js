@@ -5,15 +5,15 @@ const VoiceQueue = require('./voiceQueue.js');
 const ttsDirectory = "./tts";
 
 class Voice {
-    constructor(apiKey) {
+    constructor(config) {
         this.voiceQueue = new VoiceQueue();
-        this.apiKey = apiKey;
+        this.config = config;
     }
 
     announce(voiceChannel, message) {
         const fileName = message.replace(/[.,\\\/#!$%\^&\*;:{}=\-_`~()?]/g,"").split(" ").join("_").toLowerCase() + ".mp3";
 
-        readyAnnouncementFile(message, fileName, this.apiKey, (err, filePath) => {
+        readyAnnouncementFile(message, fileName, this.config, (err, filePath) => {
             if (err) {
                 console.error(err);
                 return;
@@ -31,34 +31,27 @@ function writeNewSoundFile(filePath, content, callback) {
     fs.mkdir(ttsDirectory, (err) => fs.writeFile(filePath, content, (err) => callback(err)));
 }
 
-function callVoiceRssApi(message, filePath, apiKey, callback) {
+function callVoiceRssApi(message, filePath, config, callback) {
     console.log("Making API call");
-    tts.speech({
-        key: apiKey,
-        hl: 'en-gb',
-        src: message,
-        r: 0,
-        c: 'mp3',
-        f: '44khz_16bit_stereo',
-        ssml: false,
-        b64: false,
-        callback: (err, content) => {
-            if (err) {
-                callback(err);
-            }
-            writeNewSoundFile(filePath, content, (err) => {
-                callback(err);
-            });
+    let params = config;
+    params.message = message;
+    params.callback = (err, content) => {
+        if (err) {
+            callback(err);
         }
-    });
+        writeNewSoundFile(filePath, content, (err) => {
+            callback(err);
+        });
+    }
+    tts.speech(params);
 };
 
-function readyAnnouncementFile(message, fileName, apiKey, callback) {
+function readyAnnouncementFile(message, fileName, config, callback) {
     const filePath = ttsDirectory + "/" + fileName;
 
     fs.stat(filePath, (err) => {
         if (err && err.code == 'ENOENT') {
-            callVoiceRssApi(message, filePath, apiKey, (err) => callback(err, filePath));
+            callVoiceRssApi(message, filePath, config, (err) => callback(err, filePath));
             return;
         }
 

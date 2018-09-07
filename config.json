@@ -5,11 +5,20 @@
   },
   "messages": {
     "summoned": "Heralda, as summoned.",
-    "memberConnected": "{$name} has connected.",
-    "memberDisconnected": "{$name} has left the channel.",
+    "memberConnected": "{name} has connected.",
+    "memberDisconnected": "{name} has left the channel.",
     "errors": {
       "memberNotInAVoiceChannel": "you aren't in a voice channel.",
       "alreadyInMembersChannel": "I'm already in your channel."
     }
+  },
+  "voice": {
+    "apiKey": null,
+    "language": "en-gb",
+    "speakingSpeed": 0,
+    "codec": "mp3",
+    "format": "44khz_16bit_stereo",
+    "ssml": false,
+    "base64": false
   }
 }

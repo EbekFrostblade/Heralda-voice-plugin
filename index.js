@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const format = require('string-template');
 const HeraldaPlugin = require('heralda-plugin-base');
 
 const Voice = require("./classes/voice.js");
@@ -6,8 +7,8 @@ const defaultConfig = require('./config.json');
 
 class VoicePlugin extends HeraldaPlugin {
   init(client, config) {
-    this.voice = new Voice(config.voiceApiKey);
     this.config = HeraldaPlugin.mergeConfigs(config, defaultConfig);
+    this.voice = new Voice(config.voice);
 
     this._listenForSummons();
     this._listenForVoiceStatusChanges();
@@ -30,16 +31,21 @@ class VoicePlugin extends HeraldaPlugin {
   _listenForVoiceStatusChanges() {
     this.client.on('voiceStateUpdate', (oldState, newState) => {
       const guildConnection = this.client.voiceConnections.get(newState.guild.id);
+      let message = null;
 
       if (newState.user.id == this.client.user.id || !guildConnection) {
-          return;
+        return;
       }
 
       if (newState.voiceChannel && newState.voiceChannel.id === guildConnection.channel.id) {
-          this._announceUserArrival(newState, guildConnection.channel);
+        message = this._announceUser(newState, this.config.messages.memberConnected);
       }
       else if (oldState.voiceChannel.id === guildConnection.channel.id) {
-          this._announceUserExit(oldState, guildConnection.channel);
+        message = this._announceUser(oldState, this.config.messages.memberDisconnected);
+      }
+
+      if (message) {
+        this.voice.announce(guildConnection.channel, message); 
       }
     });
   }
@@ -80,16 +86,8 @@ class VoicePlugin extends HeraldaPlugin {
     }
   }
 
-  _announceUserArrival(guildMember, voiceChannel) {
-    let name = (guildMember.nickname || guildMember.user.username);
-    const message = this.config.messages.memberConnected;
-    this.voice.announce(voiceChannel, message);
-  }
-
-  _announceUserExit(guildMember, voiceChannel) {
-    let name = (guildMember.nickname || guildMember.user.username);
-    const message = this.config.messages.memberDisconnected;
-    this.voice.announce(voiceChannel, message);
+  _announceUser(guildMember, message) {
+    return format(message, { name: (guildMember.nickname || guildMember.user.username) });
   }
 }
 

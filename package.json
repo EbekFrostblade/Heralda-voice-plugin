@@ -22,7 +22,8 @@
   "license": "MIT",
   "dependencies": {
     "heralda-plugin-base": "EbekFrostblade/Heralda-plugin-base",
-    "request": "~2.72.0"
+    "request": "~2.72",
+    "string-template": "~1.0"
   },
   "peerDependencies": {
     "discord.js": "^11.4.2"
