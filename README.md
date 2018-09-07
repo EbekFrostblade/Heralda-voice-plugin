@@ -10,20 +10,19 @@ This is Heralda's main voice plugin. It can serve as an example to create your p
 
 You can configure the voice plugin by changings your `_config.json` file in your Heralda root directory:
 
-```json
+```javascript
 {
-  "token": [DISCORD TOKEN],
+  "token": "[DISCORD TOKEN]",
   "plugins": {
     "heralda-voice-plugin": {
       "commands": {
-        ...
+        //"[COMMAND NAME]": "[INPUTS, IN, AN, ARRAY]"
       },
       "messages": {
-        ...
+        //"[MESSAGE NAME]": "[MESSAGE TEXT]"
       },
       "voice": {
-        "apiKey": [VOICE-RSS KEY - required],
-        ...
+        "apiKey": "[VOICE-RSS KEY]" //plus additional audio settings
       }
     }
   }
