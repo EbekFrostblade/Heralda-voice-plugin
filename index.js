@@ -8,7 +8,7 @@ const defaultConfig = require('./config.json');
 class VoicePlugin extends HeraldaPlugin {
   init(client, config) {
     this.config = HeraldaPlugin.mergeConfigs(config, defaultConfig);
-    this.voice = new Voice(config.voice);
+    this.voice = new Voice(this.config.voice);
 
     this._listenForSummons();
     this._listenForVoiceStatusChanges();
