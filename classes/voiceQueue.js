@@ -19,9 +19,17 @@ class VoiceQueue {
 
         let audio = this.voiceChannelAudioQueues[voiceChannel.id][0];
         console.log('playing audio: ' + audio);
-        voiceChannel.connection.playFile(audio).on('end', () => {
+        console.log('voice channel: ' + voiceChannel.id);
+        console.log('voice connection ready: ' + voiceChannel.connection.status == 0);
+        let request = voiceChannel.connection.playFile(audio);
+
+        request.on('end', () => {
             this.voiceChannelAudioQueues[voiceChannel.id].splice(0, 1);
             this.playNextForVoiceChannel(voiceChannel);
+        });
+
+        request.on('error', (e) => {
+            console.error('playback error: ' + e);
         });
     }
 }

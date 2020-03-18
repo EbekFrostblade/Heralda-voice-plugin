@@ -37,6 +37,10 @@ class VoicePlugin extends HeraldaPlugin {
         return;
       }
 
+      if (newState.voiceChannel.id == oldState.voiceChannel.id) {
+        return;
+      }
+
       if (newState.voiceChannel && newState.voiceChannel.id === guildConnection.channel.id) {
         message = this._announceUser(newState, this.config.messages.memberConnected);
       }
