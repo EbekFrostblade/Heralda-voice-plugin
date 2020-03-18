@@ -37,7 +37,7 @@ class VoicePlugin extends HeraldaPlugin {
         return;
       }
 
-      if (newState.voiceChannel.id == oldState.voiceChannel.id) {
+      if (newState && newState.voiceChannel && newState.voiceChannel.id == oldState.voiceChannel.id) {
         return;
       }
 
