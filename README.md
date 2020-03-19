@@ -23,6 +23,15 @@ You can configure the voice plugin by changings your `_config.json` file in your
       },
       "voice": {
         "apiKey": "[VOICE-RSS KEY]" //plus additional audio settings
+		
+		"useGoogleTTS": false, //set to true to use Google TTS
+		"GAPIkey": "[google cloud api key]",
+		"GLanguage": "en-US", 
+		"GVoiceName": "en-US-Wavenet-B",
+		"GssmlGender": "MALE",
+		"GSpeakingRate": 1,
+		"GVoicePitch": 0
+				
       }
     }
   }
