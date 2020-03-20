@@ -26,6 +26,6 @@
     "string-template": "~1.0"
   },
   "peerDependencies": {
-    "discord.js": "^11.4.2"
+    "discord.js": "^11.6.3"
   }
 }
