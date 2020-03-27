@@ -1,0 +1,27 @@
+{
+  "name": "google-tts",
+  "version": "0.0.1",
+  "description": "Provides access to Google's cloud text-to-speech API, based on the API library from Voice RSS",
+  "main": "index.js",
+  "dependencies": {
+    "request": "~2.72.0"
+  },
+  "keywords": [
+    "google",
+	"text",
+    "to",
+    "speech",
+    "tts",
+    "api",
+    "voice",
+    "online",
+    "api"
+  ],
+  "author": {
+    "name": "",
+    "email": "",
+    "website": ""
+  },
+  "license": "MIT",
+  "readmeFilename": "README"
+}

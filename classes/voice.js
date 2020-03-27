@@ -1,5 +1,9 @@
 const fs = require('fs');
-const tts = require('../lib/voice-rss-tts/index.js');
+
+if (useGoogleTTS){
+	const tts = require('../lib/google-tts/index.js');
+else
+	const tts = require('../lib/voice-rss-tts/index.js');
 
 const VoiceQueue = require('./voiceQueue.js');
 const ttsDirectory = "./tts";
@@ -27,8 +31,11 @@ class Voice {
 
 module.exports = Voice;
 
-function writeNewSoundFile(filePath, content, callback) {
-    fs.mkdir(ttsDirectory, (err) => fs.writeFile(filePath, content, (err) => callback(err)));
+function writeNewSoundFile(filePath, content, params, callback) {
+	if (params.useGoogleTTS)
+		fs.mkdir(ttsDirectory, (err) => fs.writeFile(filePath, content.audioContent, 'binary', (err) => callback(err)));
+	else
+		fs.mkdir(ttsDirectory, (err) => fs.writeFile(filePath, content, (err) => callback(err)));
 }
 
 function callVoiceRssApi(message, filePath, config, callback) {
@@ -39,7 +46,7 @@ function callVoiceRssApi(message, filePath, config, callback) {
         if (err) {
             callback(err);
         }
-        writeNewSoundFile(filePath, content, (err) => {
+        writeNewSoundFile(filePath, content, params, (err) => {
             callback(err);
         });
     }
